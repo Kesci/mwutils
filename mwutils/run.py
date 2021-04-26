@@ -93,7 +93,7 @@ class CustomLogger(Logger):
 class Run():
     def __init__(self, name="lab_run", user_id="user1", lab_id="lab1", org_id="", flush_interval_seconds=5,
                  sys_stat_sample_size=1, sys_stat_sample_interval=2, local_path='', write_logs_to_local=False,
-                 remote_path='https://www.kesci.com/api/runs', buffer_all_logs=False):
+                 remote_path='https://www.heywhale.com/api/runs', buffer_all_logs=False):
         if name in run_names:
             s = "name {} is already used in current session.".format(name)
             raise Exception(s)
@@ -250,7 +250,7 @@ class Run():
             json_struct = {"metadata": self.metadata, "timestamp":tp, "signal": sig, "reason": reason}
             for _ in range(3):
                 r = requests.post(self.abort_remote_path, json=json_struct, headers={"Authorization": jwt.encode(
-                    {"whatever": "1"}, "79eb9467-8348-4b29-a997-7a9685e1a820")})
+                    {"whatever": "1"}, "857851b2-c28c-4d94-83c8-f607b50ccd03")})
                 if r.status_code >= 400:
                     # something wrong
                     jb = ''
@@ -287,7 +287,7 @@ class Run():
             json_struct = {"metadata": self.metadata, "best": [{"phase": name, "val": logger.memoize, _TIMESTAMP: tp} for name, logger in self._loggers.items()]}
             for _ in range(3):
                 r = requests.post(self.conclude_remote_path, json=json_struct, headers={"Authorization": jwt.encode(
-                    {"whatever": "1"}, "79eb9467-8348-4b29-a997-7a9685e1a820")})
+                    {"whatever": "1"}, "857851b2-c28c-4d94-83c8-f607b50ccd03")})
                 if r.status_code >= 400:
                     # something wrong
                     jb = ''
