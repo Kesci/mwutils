@@ -2,8 +2,8 @@ import setuptools
 
 setuptools.setup(
     name="mwutils",  # Replace with your own username
-    version="0.4.6",
-    author="mw123",
+    version="0.4.6.1",
+    author="heywhale.com",
     description="use in mw",
     url="https://github.com/mkkb473/mwutils",
     packages=setuptools.find_packages(),
