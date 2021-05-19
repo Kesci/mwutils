@@ -68,7 +68,7 @@ class MLLoger(Logger):
         if custom_logs:
             if isinstance(custom_logs, dict):
                 for k, v in custom_logs.items():
-                    if k not in ['loss', 'acc', 'accuracy']:
+                    if k not in ['loss', 'acc', 'accuracy', 'val_loss', 'val_acc', 'val_accuracy']:
                         if 'custom_keys' not in self.metadata['annotations']:
                             self.metadata['annotations']['custom_keys'] = []
                         if k not in self.metadata['annotations']['custom_keys']:
@@ -151,6 +151,9 @@ class Run():
         self._loggers['system'] = CustomLogger("system", sample_time_interval_seconds=self.flush_interval_seconds,
                                                 metadata=self.metadata, local_path=sys_path, post_addr=self.logs_remote_path,
                                                 buffer_all=self.buffer_all_logs)
+        self._loggers['meta'] = CustomLogger("meta", sample_time_interval_seconds=self.flush_interval_seconds,
+                                                metadata=self.metadata, local_path=sys_path, post_addr=self.logs_remote_path,
+                                                buffer_all=self.buffer_all_logs)
 
     def start_ml(self):
         if self.started:
@@ -163,6 +166,9 @@ class Run():
             clogger.start()
         self.sys_stat = SystemStats(self)
         self.sys_stat.start()
+    
+    def log_meta(self, data):
+        self._loggers['meta'].log(data)
 
     def log_ml(self, step=None, epoch=None, batch=None, loss=None, acc=None, phase="train", custom_logs=None):
         # phase is the same thing with namea
